@@ -1,0 +1,38 @@
+{% extends "web/shop-base.html" %}
+{% load static %}
+{% block shop-content %}
+<section id="products" class="s-products">
+    <div class="row">
+        <!-- Product Card 1 -->
+        <div class="column xl-3 lg-4 md-6 sm-12">
+            <div class="product-card">
+                <a href="#" class="product-card__image">
+                    <img src="{% static 'web/images/products/user-07.jpeg' %}" alt="Product 1">
+                </a>
+                <div class="product-card__content">
+                    <h3 class="product-card__title">Product Name 1</h3>
+                    <p class="product-card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore, dolorem!</p>
+                    <span class="product-card__price">$29.99</span>
+                    <a href="{% url "cart" %}" class="btn btn--primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Card 2 -->
+        <div class="column xl-3 lg-4 md-6 sm-12">
+            <div class="product-card">
+                <a href="#" class="product-card__image">
+                    <img src="{% static 'web/images/products/user-07.jpeg' %}" alt="Product 2">
+                </a>
+                <div class="product-card__content">
+                    <h3 class="product-card__title">Product Name 2</h3>
+                    <p class="product-card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore, dolorem!</p>
+                    <span class="product-card__price">$49.99</span>
+                    <a href="{% url "cart" %}" class="btn btn--primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

@@ -33,3 +33,15 @@ def login(request):
 def register(request):
     context = {}
     return render(request, 'web/register.html', context)
+
+def shop(request):
+    context = {}
+    return render(request, 'web/shop.html', context)
+
+def cart(request):
+    context = {}
+    return render(request, 'web/cart.html', context)
+
+def checkout(request):
+    context = {}
+    return render(request, 'web/checkout.html', context)

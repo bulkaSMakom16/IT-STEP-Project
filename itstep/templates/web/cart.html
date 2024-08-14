@@ -1,0 +1,55 @@
+{% extends "web/cart-base.html" %}
+{% load static %}
+
+{% block cart-content %}
+<section id="cart" class="s-cart">
+    <div class="row">
+        <div class="column xl-12">
+            <h2>Your Cart</h2>
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example product row -->
+                    <tr>
+                        <td>
+                            <div class="cart-item">
+                                <img src="{% static 'web/images/product-placeholder.png' %}" alt="Product Image">
+                                <div class="cart-item-info">
+                                    <h3>Product Name</h3>
+                                    <p>Product Description</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>$20.00</td>
+                        <td>
+                            <input type="number" value="1" min="1" class="cart-quantity">
+                        </td>
+                        <td>$20.00</td>
+                        <td>
+                            <button class="btn btn--remove">Remove</button>
+                        </td>
+                    </tr>
+                    <!-- Add more rows here -->
+                </tbody>
+            </table>
+            
+            <div class="cart-summary">
+                <h3>Cart Summary</h3>
+                <p>Subtotal: $20.00</p>
+                <p>Shipping: $5.00</p>
+                <p>Total: $25.00</p>
+                
+                <a href="{% url 'checkout' %}" class="btn btn--checkout">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -2322,6 +2322,73 @@ input[type=button]:hover {
     text-decoration: underline;
 }
 
+/* shop.css */
+
+.s-products {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-card__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product-card__content {
+    padding: 15px;
+}
+
+.product-card__title {
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.product-card__description {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 15px;
+}
+
+.product-card__price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    margin: 0 0 15px;
+}
+
+.btn--primary {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.btn--primary:hover {
+    background-color: #0056b3;
+}
+
+
 .btn.btn--primary,
 button.btn--primary,
 input[type=submit].btn--primary,
@@ -2437,7 +2504,7 @@ td:last-child {
 	-webkit-overflow-scrolling: touch;
 }
 
-
+  
 
 /* ===================================================================
  * # COMPONENTS
@@ -2635,6 +2702,14 @@ td:last-child {
 .alert-box--error .alert-box__close::before,
 .alert-box--error .alert-box__close::after {
 	background-color: var(--color-error-content);
+}
+
+.s-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px; /* Adjust this value as needed */
+    padding-top: 10px; /* Adjust this value as needed */
 }
 
 .alert-box--success {
