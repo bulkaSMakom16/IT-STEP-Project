@@ -21,3 +21,7 @@ def blog(request):
 def contact(request):
     context = {}
     return render(request, 'web/contact.html', context)
+
+def single(request):
+    context = {}
+    return render(request, 'web/single.html', context)
