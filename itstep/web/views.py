@@ -25,3 +25,7 @@ def contact(request):
 def single(request):
     context = {}
     return render(request, 'web/single.html', context)
+
+def login(request):
+    context = {}
+    return render(request, 'web/login.html', context)

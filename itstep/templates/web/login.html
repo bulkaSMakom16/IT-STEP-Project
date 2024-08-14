@@ -1,0 +1,24 @@
+{% extends "web/login-base.html" %}
+{% load static %}
+{% block login-content %}
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username or Email:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn-submit">Login</button>
+    </form>
+
+    <div class="register-link">
+        <p>Dont have a account? <a href="#">Register Here</a></p>
+    </div>
+</div>
+</div>
+{% endblock %}
