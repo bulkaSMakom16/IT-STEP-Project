@@ -2704,13 +2704,6 @@ td:last-child {
 	background-color: var(--color-error-content);
 }
 
-.s-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 100px; /* Adjust this value as needed */
-    padding-top: 10px; /* Adjust this value as needed */
-}
 
 .alert-box--success {
 	background-color: var(--color-success);
