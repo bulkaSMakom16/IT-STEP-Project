@@ -2325,6 +2325,7 @@ input[type=button]:hover {
 /* shop.css */
 
 .s-products {
+	margin-top: 100px;
     padding: 20px;
     background-color: #f9f9f9;
 }
@@ -3437,6 +3438,12 @@ td:last-child {
 	flex           : 1 1 0%;
 	align-items    : center;
 	justify-content: space-between;
+}
+
+.s-header__nav_shop{
+	margin-left: auto;
+    display: flex;
+    align-items: center;
 }
 
 .s-header__menu-links {
