@@ -64,7 +64,6 @@
                 </div> <!-- end s-header__block -->
 
                 <nav class="s-header__nav">
-    
                     <ul class="s-header__menu-links">
                         <li><a href="about">About</a></li>
                         <li><a href="services">Services</a></li>
@@ -73,8 +72,13 @@
                     </ul> <!-- s-header__menu-links -->
 
                     <div class="s-header__contact">
+                        {% if user.is_authenticated %}
+                            <a href="#" class='login-register'>Profile</a>
+                            <a href="{% url "logout" %}" class='login-register'>Logout</a>
+                        {% else %}
                             <a href="login" class='login-register'>Login</a>
                             <a href="register" class='login-register'>Register</a> 
+                        {% endif %}
                         <a href="contact" class="btn btn--primary s-header__contact-btn">Let's Work Together</a>              
                     </div> <!-- s-header__contact -->
     
