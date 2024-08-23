@@ -14,7 +14,11 @@
                         {{ product.description|slice:":100" }}{% if product.description|length > 100 %}...{% endif %}
                     </p>
                     <span class="product-card__price">${{ product.price }}</span>
-                    <a href="{% url 'cart' %}" class="btn btn--primary">Add to Cart</a>
+                    <form method="post" action="{% url 'add_to_cart' product.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="submit" value="Add to Cart">
+                    </form>
                 </div>
             </div>
         </div>

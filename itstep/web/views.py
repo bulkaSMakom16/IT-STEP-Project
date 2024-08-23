@@ -3,10 +3,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth import authenticate, login as authLogin
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from .models import Category, Post, Product, Purchase
 from .forms import CustomUserCreationForm, ProductForm,User
 from django.contrib.auth.forms import UserCreationForm
-
+from .cart import Cart
 # Create your views here.
 
 def register(request):
@@ -97,6 +98,42 @@ def add_product(request):
     }
     return render(request, 'web/add_product.html', context)
 
+@require_POST
+def add_to_cart(request, item_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=item_id)
+    quantity = int(request.POST.get('quantity', 1))
+    cart.add(product, quantity)
+    return redirect('cart')
+
+@require_POST
+def update_cart(request, item_id):
+    item_id = str(item_id)
+    if not item_id.isdigit():
+        return redirect('cart')
+    
+    quantity = int(request.POST.get('quantity', 1))
+    cart = request.session.get('cart', {})
+    if quantity <= 0:
+        cart.pop(item_id, None)
+    else:
+        if item_id in cart:
+            cart[item_id]['quantity'] = quantity
+    request.session['cart'] = cart
+    return redirect('cart')
+
+@require_POST
+def remove_from_cart(request, item_id):
+    item_id = str(item_id)
+    if not item_id.isdigit():
+        return redirect('cart')
+    cart = Cart(request)
+    try:
+        product = get_object_or_404(Product, id=item_id)
+        cart.remove(product)
+    except ValueError:
+        pass
+    return redirect('cart')
 
 def about(request):
     context = {}

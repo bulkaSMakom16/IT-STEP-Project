@@ -1,54 +1,63 @@
 {% extends "web/cart-base.html" %}
 {% load static %}
+{% load cart_filters %}
 
 {% block cart-content %}
 <section id="cart" class="s-cart">
-    <div class="row">
-        <div class="column xl-12">
-            <h2>Your Cart</h2>
-            <table class="cart-table">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Example product row -->
-                    <tr>
-                        <td>
-                            <div class="cart-item">
-                                <img src="{% static 'web/images/product-placeholder.png' %}" alt="Product Image">
-                                <div class="cart-item-info">
-                                    <h3>Product Name</h3>
-                                    <p>Product Description</p>
+    <div class="container">
+        <h2>Your Cart</h2>
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if cart %}
+                    {% for item in cart %}
+                        <tr>
+                            <td>
+                                <div class="cart-item">
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                    <div class="cart-item-info">
+                                        <h3>{{ item.product.name }}</h3>
+                                        <p>{{ item.product.description }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>$20.00</td>
-                        <td>
-                            <input type="number" value="1" min="1" class="cart-quantity">
-                        </td>
-                        <td>$20.00</td>
-                        <td>
-                            <button class="btn btn--remove">Remove</button>
-                        </td>
+                            </td>
+                            <td>${{ item.price }}</td>
+                            <td>${{ item.total_price }}</td>
+                            <td>
+                                {% if item.id %}
+                                    <form method="POST" action="{% url 'remove_from_cart' item.id %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn--remove">Delete Course</button>
+                                    </form>
+                                {% else %}
+                                    <p>Invalid ID</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Your cart is empty.</td>
                     </tr>
-                    <!-- Add more rows here -->
-                </tbody>
-            </table>
-            
-            <div class="cart-summary">
-                <h3>Cart Summary</h3>
-                <p>Subtotal: $20.00</p>
-                <p>Shipping: $5.00</p>
-                <p>Total: $25.00</p>
-                
-                <a href="{% url 'checkout' %}" class="btn btn--checkout">Proceed to Checkout</a>
-            </div>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="4">Your cart is empty.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <p>Subtotal: ${{ cart.get_total_price }}</p>
+            <a href="{% url 'checkout' %}" class="btn btn--checkout">Proceed to Checkout</a>
         </div>
     </div>
 </section>

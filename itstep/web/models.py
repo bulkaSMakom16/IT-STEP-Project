@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
 # Create your models here.
 
 class Category(models.Model):
@@ -38,7 +36,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='products/'), processors=[ResizeToFill(300, 300)], format='JPEG', options={'quality': 60}
+    image = models.ImageField(upload_to='products/', default='products')
 
 class Purchase(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases')
