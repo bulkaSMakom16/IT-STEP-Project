@@ -1,0 +1,14 @@
+{% extends "web/shop-base.html" %}
+{% load static %}
+{% block shop-content %}
+<section id="add-product" class="s-add-product">
+    <div class="container">
+        <h1 class="page-title">Add a New Product</h1>
+        <form method="POST" enctype="multipart/form-data" class="product-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn--primary">Add Product</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

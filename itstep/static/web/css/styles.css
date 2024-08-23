@@ -2324,6 +2324,186 @@ input[type=button]:hover {
 
 /* shop.css */
 
+#user-panel {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+#user-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#user-panel ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#user-panel li {
+    padding: 8px 16px;
+}
+
+#user-panel li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+#user-panel li a:hover {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-details p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.profile-actions {
+    margin-top: 20px;
+}
+
+.profile-actions .btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-tabs {
+    position: relative;
+}
+
+.tab-label {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 5px 5px 0 0;
+    margin-right: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.tab-radio {
+    display: none;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: -1px;
+}
+
+.tab-radio:checked + .tab-label {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+#tab1:checked ~ #ProfileDetails,
+#tab2:checked ~ #PurchasedProducts {
+    display: block;
+}
+
+.profile-actions .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Base styles for the add-product page */
+.s-add-product {
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
+}
+
+.product-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-form p {
+    margin-bottom: 1rem;
+}
+
+.product-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.product-form input, .product-form textarea, .product-form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.product-form button {
+    align-self: center;
+    padding: 1rem 2.5rem; /* Increased padding */
+    font-size: 1.2rem; /* Increased font size */
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.product-form button:hover {
+    background-color: #0056b3;
+}
+
+
 .s-products {
 	margin-top: 100px;
     padding: 20px;
@@ -2347,7 +2527,7 @@ input[type=button]:hover {
 .product-card__image img {
     width: 100%;
     height: auto;
-    display: block;
+    object-fit: cover;
 }
 
 .product-card__content {
@@ -2364,6 +2544,9 @@ input[type=button]:hover {
     font-size: 14px;
     color: #666;
     margin: 0 0 15px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .product-card__price {

@@ -2,8 +2,9 @@ from pyexpat.errors import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth import authenticate, login as authLogin
-from .models import Category, Post
-from .forms import CustomUserCreationForm,User
+from django.contrib.auth.decorators import login_required
+from .models import Category, Post, Product, Purchase
+from .forms import CustomUserCreationForm, ProductForm,User
 from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
@@ -52,6 +53,50 @@ def login_view(request):
         else:
             messages.error(request, 'Invalid username or password')
     return render(request, 'web/login.html')
+
+@login_required
+def profile_view(request):
+    user = request.user
+    purchases = Purchase.objects.filter(user=user)
+    context = {
+        'user': user,
+        'purchases': purchases,
+    }
+    return render(request, 'web/profile.html', context)
+
+def shop_view(request):
+    products = Product.objects.all()
+    if request.user.is_staff:
+        if request.method == 'POST':
+            form = ProductForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('shop')
+        else:
+            form = ProductForm()
+        return render(request, 'web/shop.html', {'products': products, 'form': form})
+    else:
+        return render(request, 'web/shop.html', {'products': products})
+    
+def product_detail_view(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'web/product_detail.html', {'product': product})
+
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('shop')
+    else:
+        form = ProductForm()
+    
+    context = {
+        'form': form
+    }
+    return render(request, 'web/add_product.html', context)
+
 
 def about(request):
     context = {}

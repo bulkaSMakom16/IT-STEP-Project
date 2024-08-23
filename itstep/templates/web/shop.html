@@ -1,38 +1,34 @@
 {% extends "web/shop-base.html" %}
-{% load static %}
 {% block shop-content %}
 <section id="products" class="s-products">
     <div class="row">
-        <!-- Product Card 1 -->
+        {% for product in products %}
         <div class="column xl-3 lg-4 md-6 sm-12">
             <div class="product-card">
-                <a href="#" class="product-card__image">
-                    <img src="{% static 'web/images/products/user-07.jpeg' %}" alt="Product 1">
+                <a href="{% url 'product_detail' product.id %}" class="product-card__image">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
                 </a>
                 <div class="product-card__content">
-                    <h3 class="product-card__title">Product Name 1</h3>
-                    <p class="product-card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore, dolorem!</p>
-                    <span class="product-card__price">$29.99</span>
-                    <a href="{% url "cart" %}" class="btn btn--primary">Add to Cart</a>
+                    <h3 class="product-card__title">{{ product.name }}</h3>
+                    <p class="product-card__description">
+                        {{ product.description|slice:":100" }}{% if product.description|length > 100 %}...{% endif %}
+                    </p>
+                    <span class="product-card__price">${{ product.price }}</span>
+                    <a href="{% url 'cart' %}" class="btn btn--primary">Add to Cart</a>
                 </div>
             </div>
         </div>
-
-        <!-- Product Card 2 -->
-        <div class="column xl-3 lg-4 md-6 sm-12">
-            <div class="product-card">
-                <a href="#" class="product-card__image">
-                    <img src="{% static 'web/images/products/user-07.jpeg' %}" alt="Product 2">
-                </a>
-                <div class="product-card__content">
-                    <h3 class="product-card__title">Product Name 2</h3>
-                    <p class="product-card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore, dolorem!</p>
-                    <span class="product-card__price">$49.99</span>
-                    <a href="{% url "cart" %}" class="btn btn--primary">Add to Cart</a>
-                </div>
-            </div>
-        </div>
-
+        {% endfor %}
     </div>
+
+    {% if user.is_staff %}
+    <hr>
+    <h2>Add a New Product</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn--primary">Add Product</button>
+    </form>
+    {% endif %}
 </section>
 {% endblock %}

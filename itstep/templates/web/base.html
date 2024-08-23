@@ -73,7 +73,33 @@
 
                     <div class="s-header__contact">
                         {% if user.is_authenticated %}
-                            <a href="#" class='login-register'>Profile</a>
+                            <a href="#" id="user-name" onclick="togglePanel()">{{user.username}}</a>
+
+                            <div id="user-panel">
+                                <ul>
+                                    <li><a href="#">Update Profile</a></li>
+                                    <li><a href="{% url "profile" %}">Profile</a></li>
+                                </ul>
+                            </div>
+
+                            <script>
+                                function togglePanel() {
+                                    var panel = document.getElementById('user-panel');
+                                    if (panel.classList.contains('show')) {
+                                        panel.classList.remove('show');
+                                    } else {
+                                        panel.classList.add('show');
+                                    }
+                                }
+                                window.onclick = function(event) {
+                                    var panel = document.getElementById('user-panel');
+                                    if (!event.target.matches('#user-name') && !event.target.closest('#user-panel')) {
+                                        if (panel.classList.contains('show')) {
+                                            panel.classList.remove('show');
+                                        }
+                                    }
+                                }
+                            </script>
                             <a href="{% url "logout" %}" class='login-register'>Logout</a>
                         {% else %}
                             <a href="login" class='login-register'>Login</a>

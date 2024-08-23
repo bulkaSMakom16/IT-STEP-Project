@@ -1,7 +1,12 @@
 from django import forms
-from .models import Post, Category
+from .models import Post, Category, Product
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'image']
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
