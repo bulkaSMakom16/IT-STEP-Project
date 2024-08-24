@@ -60,7 +60,6 @@
                     
                     <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
                 </div> <!-- end s-header__block -->
-                
                 <nav class="s-header__nav_shop">
                     <div class="s-header__cart">
                         <a href="{% url 'cart' %}" title="Shopping Cart">
@@ -70,6 +69,7 @@
                                 <line x1="15.99" y1="20" x2="16.01" y2="20" stroke-linecap="round" stroke-width="2"></line>
                             </svg>
                             <span class="s-header__cart-count">{{ cart_count }}</span> <!-- This will display the total item count -->
+                            <li><a href="{% url 'update_profile' %}">Update Profile</a></li>
                         </a>                     
                     </div>
                 </nav> <!-- end s-header__nav -->
@@ -82,7 +82,7 @@
         <!-- # site main content
         ================================================== -->
         <section id="content" class="s-content">
-            {% block shop-content %}
+            {% block profile-content %}
             {% endblock%}
         </section> <!-- end s-journal -->
 

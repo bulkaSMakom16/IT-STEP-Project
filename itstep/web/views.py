@@ -1,13 +1,16 @@
 from pyexpat.errors import messages
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth import authenticate, login as authLogin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .models import Category, Post, Product, Purchase
-from .forms import CustomUserCreationForm, ProductForm,User
+from .models import Category, Post, Product
+from .forms import CustomUserCreationForm, OrderForm, ProductForm,User
 from django.contrib.auth.forms import UserCreationForm
+from .forms import ProfileUpdateForm, CustomPasswordChangeForm
 from .cart import Cart
+from .models import PurchasedProduct
 # Create your views here.
 
 def register(request):
@@ -58,10 +61,10 @@ def login_view(request):
 @login_required
 def profile_view(request):
     user = request.user
-    purchases = Purchase.objects.filter(user=user)
+    purchased_products = PurchasedProduct.objects.filter(user=request.user)
     context = {
         'user': user,
-        'purchases': purchases,
+        'purchased_products': purchased_products,
     }
     return render(request, 'web/profile.html', context)
 
@@ -98,6 +101,60 @@ def add_product(request):
     }
     return render(request, 'web/add_product.html', context)
 
+@login_required
+def checkout_page(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            product_id = form.cleaned_data.get('product_id')
+            print(f"Product ID from form: {product_id}")
+            try:
+                product = Product.objects.get(id=product_id)
+                print(f"Product found: {product}")
+                PurchasedProduct.objects.create(
+                    user=request.user,
+                    product=product,
+                )
+                return redirect('profile')
+            except Product.DoesNotExist:
+                print(f"No Product matches the given query: {product_id}")
+                return redirect('order_page')
+    else:
+        form = OrderForm()
+
+    return render(request, 'web/checkout.html', {'form': form})
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        profile_form = ProfileUpdateForm(request.POST, instance=request.user)
+        password_form = CustomPasswordChangeForm(user=request.user, data=request.POST)
+        
+        if 'update_profile' in request.POST:
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, 'Your profile has been updated successfully.')
+                return redirect('profile')
+            else:
+                messages.error(request, 'There was an error updating your profile.')
+
+        if 'change_password' in request.POST:
+            if password_form.is_valid():
+                password_form.save()
+                messages.success(request, 'Your password has been updated successfully.')
+                return redirect('update_profile')
+            else:
+                messages.error(request, 'There was an error changing your password.')
+    else:
+        profile_form = ProfileUpdateForm(instance=request.user)
+        password_form = CustomPasswordChangeForm(user=request.user)
+
+    context = {
+        'profile_form': profile_form,
+        'password_form': password_form,
+    }
+    return render(request, 'web/update_profile.html', context)
+
 @require_POST
 def add_to_cart(request, item_id):
     cart = Cart(request)
@@ -105,6 +162,14 @@ def add_to_cart(request, item_id):
     quantity = int(request.POST.get('quantity', 1))
     cart.add(product, quantity)
     return redirect('cart')
+
+def cart_view(request):
+    cart = Cart(request)
+    context = {
+        'cart': cart,
+        'cart_count': cart.get_total_items(),
+    }
+    return render(request, 'web/cart.html', context)
 
 @require_POST
 def update_cart(request, item_id):
@@ -128,11 +193,7 @@ def remove_from_cart(request, item_id):
     if not item_id.isdigit():
         return redirect('cart')
     cart = Cart(request)
-    try:
-        product = get_object_or_404(Product, id=item_id)
-        cart.remove(product)
-    except ValueError:
-        pass
+    cart.remove_item(item_id)  # Use remove_item with item_id directly
     return redirect('cart')
 
 def about(request):

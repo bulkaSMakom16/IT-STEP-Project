@@ -69,7 +69,8 @@
                                 <line x1="9.99" y1="20" x2="10.01" y2="20" stroke-linecap="round" stroke-width="2"></line>
                                 <line x1="15.99" y1="20" x2="16.01" y2="20" stroke-linecap="round" stroke-width="2"></line>
                             </svg>
-                            <span class="s-header__cart-count">{{ cart_count }}</span> <!-- This will display the total item count -->
+                            <span class="s-header__cart-count">{{ cart_count }}</span>
+                            <a href="{% url "profile" %}">Profile</a> <!-- This will display the total item count -->
                         </a>                     
                     </div>
                 </nav> <!-- end s-header__nav -->
@@ -82,7 +83,7 @@
         <!-- # site main content
         ================================================== -->
         <section id="content" class="s-content">
-            {% block shop-content %}
+            {% block upd-content %}
             {% endblock%}
         </section> <!-- end s-journal -->
 

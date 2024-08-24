@@ -31,14 +31,10 @@
                             <td>${{ item.price }}</td>
                             <td>${{ item.total_price }}</td>
                             <td>
-                                {% if item.id %}
-                                    <form method="POST" action="{% url 'remove_from_cart' item.id %}" style="display:inline;">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn--remove">Delete Course</button>
-                                    </form>
-                                {% else %}
-                                    <p>Invalid ID</p>
-                                {% endif %}
+                                <form method="POST" action="{% url 'remove_from_cart' item.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit">Remove</button>
+                                </form>                                
                             </td>
                         </tr>
                     {% empty %}
@@ -57,7 +53,8 @@
         <div class="cart-summary">
             <h3>Cart Summary</h3>
             <p>Subtotal: ${{ cart.get_total_price }}</p>
-            <a href="{% url 'checkout' %}" class="btn btn--checkout">Proceed to Checkout</a>
+            <a href="{% url 'checkout_page' %}" class="btn btn--checkout">Proceed to Checkout</a>
+            <a href="{% url "shop" %}" class='btn btn--checkout'>Back to shop</a>
         </div>
     </div>
 </section>

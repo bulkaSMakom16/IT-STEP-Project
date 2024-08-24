@@ -2,6 +2,7 @@ from django import forms
 from .models import Post, Category, Product
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -28,3 +29,22 @@ class CustomUserCreationForm(UserCreationForm):
             'required': None,
             'password_mismatch': None,
         }
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput)
+    new_password1 = forms.CharField(widget=forms.PasswordInput)
+    new_password2 = forms.CharField(widget=forms.PasswordInput)
+
+class OrderForm(forms.Form):
+    product_id = forms.IntegerField(required=True)  # Assuming the product ID is an integer
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+    phone_number = forms.CharField(max_length=15)
+    email = forms.EmailField()
+    country = forms.CharField(max_length=50)
+    city = forms.CharField(max_length=50)

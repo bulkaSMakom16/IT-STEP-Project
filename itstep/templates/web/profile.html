@@ -1,7 +1,7 @@
-{% extends "web/base.html" %}
+{% extends "web/profile-base.html" %}
 {% load static %}
 
-{% block content %}
+{% block profile-content %}
 <div class="profile-container">
     <h1>{{ user.username }}'s Profile</h1>
 
@@ -14,15 +14,18 @@
 
         <div class="tab-content" id="ProfileDetails">
             <h2>Profile Information</h2>
+            <p>Name: {{user.username}}</p>
             <p>Email: {{ user.email }}</p>
         </div>
 
         <div class="tab-content" id="PurchasedProducts">
             <h2>Purchased Products</h2>
-            {% if purchases %}
+            {% if purchased_products %}
                 <ul>
-                    {% for purchase in purchases %}
-                        <li>{{ purchase.product.name }} - {{ purchase.purchased_at }}</li>
+                    {% for product in purchased_products %}
+                        <li>Product ID: {{ product.product_id }} - Purchase Date: {{ product.purchase_date }}</li>
+                    {% empty %}
+                        <li>No products purchased yet.</li>
                     {% endfor %}
                 </ul>
             {% else %}
