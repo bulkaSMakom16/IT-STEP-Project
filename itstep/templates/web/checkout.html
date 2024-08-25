@@ -6,7 +6,6 @@
     <h2>Place Your Order</h2>
     <form method="POST" action="{% url 'checkout_page' %}">
         {% csrf_token %}
-        <input type="hidden" name="product_id" value="{{ product.id }}">
         {{ form.as_p }}
         <button type="submit">Pay</button>
     </form>

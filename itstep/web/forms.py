@@ -41,7 +41,7 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     new_password2 = forms.CharField(widget=forms.PasswordInput)
 
 class OrderForm(forms.Form):
-    product_id = forms.IntegerField(required=True)  # Assuming the product ID is an integer
+    product_id = forms.IntegerField(widget=forms.HiddenInput())  # Hidden input field
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
     phone_number = forms.CharField(max_length=15)

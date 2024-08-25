@@ -104,25 +104,24 @@ def add_product(request):
 @login_required
 def checkout_page(request):
     if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            product_id = form.cleaned_data.get('product_id')
-            print(f"Product ID from form: {product_id}")
-            try:
-                product = Product.objects.get(id=product_id)
-                print(f"Product found: {product}")
-                PurchasedProduct.objects.create(
-                    user=request.user,
-                    product=product,
-                )
-                return redirect('profile')
-            except Product.DoesNotExist:
-                print(f"No Product matches the given query: {product_id}")
-                return redirect('order_page')
+        cart = request.session.get('cart', {})
+        products = Product.objects.filter(id__in=cart.keys())
+
+        for product in products:
+            PurchasedProduct.objects.create(
+                user=request.user,
+                product=product,
+            )
+        return redirect('profile')
+
     else:
+        cart = request.session.get('cart', {})
+        cart.clear()
+        products = Product.objects.filter(id__in=cart.keys())
         form = OrderForm()
 
-    return render(request, 'web/checkout.html', {'form': form})
+    return render(request, 'web/checkout.html', {'form': form, 'products': products})
+
 
 @login_required
 def update_profile(request):
