@@ -192,7 +192,7 @@ def remove_from_cart(request, item_id):
     if not item_id.isdigit():
         return redirect('cart')
     cart = Cart(request)
-    cart.remove_item(item_id)  # Use remove_item with item_id directly
+    cart.remove_item(item_id)
     return redirect('cart')
 
 def about(request):
