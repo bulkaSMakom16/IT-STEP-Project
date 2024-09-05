@@ -24,5 +24,7 @@ urlpatterns = [
     path('update_cart/<int:item_id>/', views.update_cart, name='update_cart'),
     path('remove-from-cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('profile/update/', views.update_profile, name='update_profile'),
+    path('create-post/', views.create_post, name='create_post'),
+    path('subscribe/', views.subscribe, name='subscribe'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

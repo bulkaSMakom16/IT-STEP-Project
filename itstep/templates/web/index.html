@@ -307,31 +307,40 @@
         <!-- # journal
         ================================================== -->
         <section id="journal" class="s-journal">
-            {% for post in posts %}
             <div class="row s-journal__content width-sixteen-col">
                 <div class="column xl-12 grid-block">
-
+            
+                    <!-- Section Header -->
                     <div class="grid-full section-header text-center">
-                        <div class="text-pretitle">Recent Articles</div>                           
-                        <h2 class="text-display-title">
-                        Latest articles from my blog.
-                        </h2>  
-                    </div> <!-- end section-header --> 
-
+                        <div class="text-pretitle">Recent Articles</div>
+                        <h2 class="text-display-title">Latest articles from my blog.</h2>
+                        
+                        <!-- Admin Button for Creating New Post -->
+                        {% if request.user.is_staff %}
+                        <div class="admin-create-post">
+                            <a href="{% url 'create_post' %}" class="button">Create New Post</a>
+                        </div>
+                        {% endif %}
+                    </div>
+            
+                    <!-- Start of Posts Loop -->
                     <div class="grid-full s-journal__content-main grid-list-items">
-
+                        {% for post in posts %}
                         <div class="grid-list-items__item blog-card">
                             <div class="blog-card__header">
                                 <div class="blog-card__cat-links">
-                                    <a href="">{{post.category}}</a>
+                                    <a href="">{{ post.category }}</a>
                                 </div>
-                                <h3 class="blog-card__title"><a href="">{{post.title}}</a></h3>
+                                <h3 class="blog-card__title"><a href="">{{ post.title }}</a></h3>
                             </div>
                             <div class="blog-card__text">
-                                <p>
-                                    {{post.content}}
-                                </p>
+                                <p>{{ post.content }}</p>
                             </div>
                         </div> <!-- end blog-card -->
                         {% endfor %}
-{% endblock  %}
+                    </div> <!-- end grid-list-items -->
+            
+                </div> <!-- end column -->
+            </div> <!-- end row -->
+            
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="newsletter-section">
+    <h3 class="newsletter-title">Newsletter</h3>
+    <p class="newsletter-description">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere ratione dignissimos.
+    </p>
+
+    <div class="subscribe-form">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn--primary btn--small u-fullwidth">Subscribe</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

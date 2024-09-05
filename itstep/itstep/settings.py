@@ -11,6 +11,14 @@ if not GOOGLE_OAUTH_CLIENT_ID:
         'Have you put it in a file at core/.env ?'
     )
 
+GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET')
+
+if not GOOGLE_OAUTH_CLIENT_ID or not GOOGLE_OAUTH_CLIENT_SECRET:
+    raise ValueError(
+        'Google OAuth credentials are missing. '
+        'Ensure you have GOOGLE_OAUTH_CLIENT_ID and GOOGLE_OAUTH_CLIENT_SECRET in your core/.env file.'
+    )
+
 # We need these lines below to allow the Google sign in popup to work.
 SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
@@ -55,6 +63,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
+
 
 SITE_ID = 1
 
@@ -163,3 +172,14 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+SOCIALACCOUT_PROVIDERS = {
+    'google':{
+        'APP':{
+            'client_id': '471812366920-lalkqqmgrir4022etjijjkeoh532adoc.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}

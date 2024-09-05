@@ -1,17 +1,45 @@
 from pyexpat.errors import messages
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth import authenticate, login as authLogin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .models import Category, Post, Product
-from .forms import CustomUserCreationForm, OrderForm, ProductForm,User
+from .forms import CustomUserCreationForm, OrderForm, PostForm, ProductForm, SubscriberForm,User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import ProfileUpdateForm, CustomPasswordChangeForm
 from .cart import Cart
 from .models import PurchasedProduct
 # Create your views here.
+
+
+def subscribe(request):
+    if request.method == 'POST':
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Successfully subscribed!")
+            return redirect('index')
+        else:
+            messages.error(request, "There was an error with your subscription.")
+    else:
+        form = SubscriberForm()
+    return render(request, 'subscribe.html', {'form': form})
+
+@staff_member_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = PostForm()
+    
+    context = {'form': form}
+    return render(request, 'web/create_post.html', context)
 
 def register(request):
     if request.method == 'POST':

@@ -1,5 +1,6 @@
 {% extends "web/login-base.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block login-content %}
 <div class="login-container">
     <h2>Login</h2>
@@ -18,7 +19,7 @@
 
     <div class="register-link">
         <p>Click below to sign in with Google</p>
-        <!--            Paste the generated HTML code for Google sign in button goes here-->
+        <a href="{% provider_login_url 'google' %} ">Here</a>
         <p>Dont have a account? <a href="{% url "register" %}">Register Here</a></p>
     </div>
 </div>

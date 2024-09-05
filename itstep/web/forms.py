@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category, Product
+from .models import Post, Category, Product, Subscriber
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import PasswordChangeForm
@@ -48,3 +48,21 @@ class OrderForm(forms.Form):
     email = forms.EmailField()
     country = forms.CharField(max_length=50)
     city = forms.CharField(max_length=50)
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'category']
+
+
+class SubscriberForm(forms.ModelForm):
+    class Meta:
+        model = Subscriber
+        fields = ['email']
+        widgets = {
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Your Email Address',
+                'class': 'u-fullwidth text-center',
+                'required': True
+            })
+        }
