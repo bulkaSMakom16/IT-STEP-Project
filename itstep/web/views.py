@@ -140,11 +140,13 @@ def checkout_page(request):
                 user=request.user,
                 product=product,
             )
+
+        request.session['cart'] = {}
+        request.session.modified = True
         return redirect('profile')
 
     else:
         cart = request.session.get('cart', {})
-        cart.clear()
         products = Product.objects.filter(id__in=cart.keys())
         form = OrderForm()
 
