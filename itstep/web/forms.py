@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category, Product, Subscriber
+from .models import Post, Category, Product, Service, Subscriber
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import PasswordChangeForm
@@ -66,3 +66,8 @@ class SubscriberForm(forms.ModelForm):
                 'required': True
             })
         }
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['name', 'description']

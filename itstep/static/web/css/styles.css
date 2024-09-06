@@ -3651,18 +3651,70 @@ td:last-child {
 /* ------------------------------------------------------------------- 
  * ## list grid
  * ------------------------------------------------------------------- */
-.grid-list-items {
-	--gap                : calc(var(--gutter) * 2);
-	--min-width          : 360px;
-	display              : grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(var(--min-width), 100%), 1fr));
-	-moz-column-gap      : var(--gap);
-	column-gap           : var(--gap);
+/* Обновленный стиль для контейнера с элементами сетки */
+.s-expertise__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Выравнивание элементов вправо */
 }
 
-.grid-list-items__item {
-	margin-bottom: var(--vspace-0_5);
+.grid-list-items {
+    --gap: calc(var(--gutter) * 2);
+    --min-width: 360px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--min-width), 100%), 1fr));
+    gap: var(--gap);
+    /* Центрирование содержимого */
+    justify-content: center;
+    margin-bottom: var(--vspace-1); /* Отступ снизу для отделения от кнопки */
 }
+
+/* Стиль для элементов сетки */
+.grid-list-items__item {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Название слева, описание справа */
+    margin-bottom: var(--vspace-0_5);
+    padding: var(--vspace-1);
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: center; /* Центрирование по вертикали */
+}
+
+/* Заголовок сервиса */
+.grid-list-items__title {
+    display: flex;
+    align-items: center;
+    padding: var(--vspace-1);
+}
+
+/* Описание сервиса */
+.grid-list-items__text {
+    display: flex;
+    align-items: center;
+    padding: var(--vspace-1);
+    text-align: left; /* Выравнивание текста по левому краю */
+}
+
+.grid-list-items__title h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.grid-list-items__text p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Стиль для кнопки добавления сервиса */
+.add-service-button {
+    display: flex;
+    justify-content: flex-end; /* Выравнивание кнопки вправо */
+    margin-top: var(--vspace-1); /* Отступ сверху для отделения от списка сервисов */
+}
+
+
 
 /* ------------------------------------------------------------------- 
  * responsive:

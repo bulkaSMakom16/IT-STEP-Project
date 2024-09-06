@@ -6,8 +6,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth import authenticate, login as authLogin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .models import Category, Post, Product
-from .forms import CustomUserCreationForm, OrderForm, PostForm, ProductForm, SubscriberForm,User
+from .models import Category, Post, Product, Service
+from .forms import CustomUserCreationForm, OrderForm, PostForm, ProductForm, ServiceForm, SubscriberForm,User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import ProfileUpdateForm, CustomPasswordChangeForm
 from .cart import Cart
@@ -27,6 +27,17 @@ def subscribe(request):
     else:
         form = SubscriberForm()
     return render(request, 'subscribe.html', {'form': form})
+
+@staff_member_required
+def add_service(request):
+    if request.method == 'POST':
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = ServiceForm()
+    return render(request, 'web/add_service.html', {'form': form})
 
 @staff_member_required
 def create_post(request):
@@ -70,7 +81,9 @@ def category(request, c=None):
 
 def index(request):
     posts = Post.objects.all()
-    context = {'posts':posts}
+    services = Service.objects.all()
+    context = {'posts':posts,
+               'services': services}
     context.update(getCategories())
     return render(request, 'web/index.html', context)
 
@@ -230,7 +243,8 @@ def about(request):
     return render(request,'web/about.html', context)
 
 def services(request):
-    context = {}
+    services = Service.objects.all()
+    context = {'services': services}
     return render(request, 'web/services.html', context)
 
 def blog(request):
